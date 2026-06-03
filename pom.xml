@@ -20,7 +20,7 @@
             <id>dv8tion</id>
             <url>https://m2.dv8tion.net/releases</url>
         </repository>
-             
+
         <repository>
             <id>lavalink</id>
             <url>https://maven.lavalink.dev/releases</url>
@@ -57,6 +57,12 @@
         <dependency>
             <groupId>moe.kyokobot.libdave</groupId>
             <artifactId>impl-jni</artifactId>
+            <version>0.1.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>moe.kyokobot.libdave</groupId>
+            <artifactId>natives-linux-x86-64</artifactId>
             <version>0.1.2</version>
         </dependency>
 
