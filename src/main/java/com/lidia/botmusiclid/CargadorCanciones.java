@@ -47,6 +47,27 @@ public class CargadorCanciones implements AudioLoadResultHandler {
             return;
         }
 
+        // Si es una búsqueda (!play despacito)
+        if (playlist.isSearchResult()) {
+
+            AudioTrack track = playlist.getTracks().get(0);
+
+            gestor.getScheduler().queue(track);
+
+            canal.sendMessage(
+                    "🎵 **Añadida a la cola**\n\n" +
+                    "**" + track.getInfo().title + "**\n\n" +
+                    track.getInfo().uri
+            ).queue();
+
+            System.out.println(
+                    "RESULTADO DE BÚSQUEDA: "
+                            + track.getInfo().title);
+
+            return;
+        }
+
+        // Si es una playlist o mix
         int canciones = 0;
 
         for (AudioTrack track : playlist.getTracks()) {
