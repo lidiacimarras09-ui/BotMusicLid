@@ -20,12 +20,7 @@
             <id>dv8tion</id>
             <url>https://m2.dv8tion.net/releases</url>
         </repository>
-
-        <repository>
-            <id>arbjerg</id>
-            <url>https://maven.arbjerg.dev/releases</url>
-        </repository>
-
+             
         <repository>
             <id>lavalink</id>
             <url>https://maven.lavalink.dev/releases</url>
