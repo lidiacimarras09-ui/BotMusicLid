@@ -34,7 +34,7 @@ public class GestorMusica implements AudioSendHandler {
             try {
                 Path cookiesPath = Files.createTempFile("yt_cookies", ".txt");
                 Files.writeString(cookiesPath, cookiesEnv);
-                youtube.useCookies(cookiesPath.toString());
+                youtube.useOauth2WithCookies(cookiesPath.toString());
                 System.out.println("✅ Cookies de YouTube cargadas");
             } catch (IOException e) {
                 System.out.println("⚠️ Error cargando cookies: " + e.getMessage());
