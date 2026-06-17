@@ -10,11 +10,7 @@ import dev.lavalink.youtube.clients.MusicWithThumbnail;
 import dev.lavalink.youtube.clients.WebWithThumbnail;
 import dev.lavalink.youtube.clients.TvHtml5EmbeddedWithThumbnail;
 import net.dv8tion.jda.api.audio.AudioSendHandler;
-
-import java.io.IOException;
 import java.nio.ByteBuffer;
-import java.nio.file.Files;
-import java.nio.file.Path;
 
 public class GestorMusica implements AudioSendHandler {
 
@@ -29,19 +25,7 @@ public class GestorMusica implements AudioSendHandler {
                 new TvHtml5EmbeddedWithThumbnail()
         );
 
-        String cookiesEnv = System.getenv("YOUTUBE_COOKIES");
-        if (cookiesEnv != null && !cookiesEnv.isEmpty()) {
-            try {
-                Path cookiesPath = Files.createTempFile("yt_cookies", ".txt");
-                Files.writeString(cookiesPath, cookiesEnv);
-                youtube.useOauth2WithCookies(cookiesPath.toString());
-                System.out.println("✅ Cookies de YouTube cargadas");
-            } catch (IOException e) {
-                System.out.println("⚠️ Error cargando cookies: " + e.getMessage());
-            }
-        } else {
-            System.out.println("⚠️ No hay cookies configuradas");
-        }
+        youtube.useOauth2(null, false);
 
         playerManager.registerSourceManager(youtube);
         com.sedmelluq.discord.lavaplayer.source.AudioSourceManagers
@@ -54,9 +38,7 @@ public class GestorMusica implements AudioSendHandler {
     private final ByteBuffer buffer = ByteBuffer.allocate(2048);
 
     private static final byte[] SILENCE_FRAME = new byte[]{
-            (byte) 0xF8,
-            (byte) 0xFF,
-            (byte) 0xFE
+            (byte) 0xF8, (byte) 0xFF, (byte) 0xFE
     };
 
     public GestorMusica() {
