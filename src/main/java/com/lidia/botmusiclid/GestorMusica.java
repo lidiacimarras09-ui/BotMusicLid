@@ -6,9 +6,8 @@ import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.playback.MutableAudioFrame;
 import dev.lavalink.youtube.YoutubeAudioSourceManager;
-import dev.lavalink.youtube.clients.MusicWithThumbnail;
-import dev.lavalink.youtube.clients.WebWithThumbnail;
-import dev.lavalink.youtube.clients.AndroidWithThumbnail;
+import dev.lavalink.youtube.clients.TvHtml5Embedded;
+import dev.lavalink.youtube.clients.Web;
 import net.dv8tion.jda.api.audio.AudioSendHandler;
 import java.nio.ByteBuffer;
 
@@ -22,9 +21,8 @@ public class GestorMusica implements AudioSendHandler {
 
         YoutubeAudioSourceManager youtube = new YoutubeAudioSourceManager(
                 true,
-                new MusicWithThumbnail(),
-                new WebWithThumbnail(),
-                new AndroidWithThumbnail()
+                new TvHtml5Embedded(),
+                new Web()
         );
 
         if (refreshToken != null && !refreshToken.isEmpty()) {
