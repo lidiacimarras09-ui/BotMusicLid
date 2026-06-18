@@ -34,7 +34,7 @@
         <dependency>
             <groupId>dev.lavalink.youtube</groupId>
             <artifactId>youtube-plugin</artifactId>
-            <version>1.14.0</version>
+            <version>1.18.1</version>
         </dependency>
         <dependency>
             <groupId>moe.kyokobot.libdave</groupId>
