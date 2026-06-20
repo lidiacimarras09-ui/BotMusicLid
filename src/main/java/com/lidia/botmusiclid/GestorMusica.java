@@ -6,8 +6,13 @@ import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.playback.MutableAudioFrame;
 import dev.lavalink.youtube.YoutubeAudioSourceManager;
-import dev.lavalink.youtube.clients.TvWithThumbnail;
-import dev.lavalink.youtube.clients.TvHtml5SimplyWithThumbnail;
+
+// Importamos los clientes que sí son compatibles con el Refresh Token de OAuth
+import dev.lavalink.youtube.clients.MusicWithThumbnail;
+import dev.lavalink.youtube.clients.WebWithThumbnail;
+import dev.lavalink.youtube.clients.AndroidTestsuiteWithThumbnail;
+import dev.lavalink.youtube.clients.TvHtml5EmbeddedWithThumbnail;
+
 import net.dv8tion.jda.api.audio.AudioSendHandler;
 import java.nio.ByteBuffer;
 
@@ -19,10 +24,13 @@ public class GestorMusica implements AudioSendHandler {
     static {
         String refreshToken = System.getenv("YOUTUBE_REFRESH_TOKEN");
 
+        // Configuración con los clientes OAuth correctos para evitar el bloqueo anti-bot
         YoutubeAudioSourceManager youtube = new YoutubeAudioSourceManager(
                 true,
-                new TvWithThumbnail(),
-                new TvHtml5SimplyWithThumbnail()
+                new MusicWithThumbnail(),
+                new WebWithThumbnail(),
+                new AndroidTestsuiteWithThumbnail(),
+                new TvHtml5EmbeddedWithThumbnail()
         );
 
         if (refreshToken != null && !refreshToken.isEmpty()) {
