@@ -9,6 +9,7 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.managers.AudioManager;
 import net.dv8tion.jda.api.requests.GatewayIntent;
+import net.dv8tion.jda.api.utils.cache.CacheFlag; // Importación necesaria para deshabilitar las alertas de caché
 
 public class Main extends ListenerAdapter {
 
@@ -16,7 +17,7 @@ public class Main extends ListenerAdapter {
 
     public static void main(String[] args) throws Exception {
 
-    	String token = System.getenv("DISCORD_TOKEN");
+        String token = System.getenv("DISCORD_TOKEN");
 
         NativeDaveFactory daveFactory = new NativeDaveFactory();
         LDJDADaveSessionFactory daveSessionFactory =
@@ -31,6 +32,8 @@ public class Main extends ListenerAdapter {
                 GatewayIntent.GUILD_MESSAGES,
                 GatewayIntent.MESSAGE_CONTENT,
                 GatewayIntent.GUILD_VOICE_STATES)
+                // Deshabilitamos manualmente las cachés que no usas para limpiar la consola de advertencias
+                .disableCache(CacheFlag.EMOJI, CacheFlag.STICKER, CacheFlag.SCHEDULED_EVENTS)
                 .setAudioModuleConfig(audioConfig)
                 .addEventListeners(new Main())
                 .build()
@@ -190,11 +193,10 @@ public class Main extends ListenerAdapter {
             return;
         }
         
-     // CLEAR
+        // CLEAR
         if (mensaje.equals("!clear")) {
 
             if (gestor != null) {
-
                 gestor.getScheduler().clear();
             }
 
@@ -243,7 +245,7 @@ public class Main extends ListenerAdapter {
             return;
         }
 
-     // QUEUE
+        // QUEUE
         if (mensaje.equals("!qn")) {
 
             if (gestor == null) {
@@ -260,7 +262,6 @@ public class Main extends ListenerAdapter {
             if (gestor.getCurrentTrack() != null) {
 
                 sb.append("🎵 Sonando ahora:\n");
-
                 sb.append("**")
                         .append(gestor.getCurrentTrack().getInfo().title)
                         .append("**\n\n");
@@ -280,14 +281,12 @@ public class Main extends ListenerAdapter {
                 i++;
 
                 if (i > 20) {
-
                     sb.append("\n... y más canciones");
                     break;
                 }
             }
 
             if (i == 1) {
-
                 sb.append("Vacía");
             }
 
