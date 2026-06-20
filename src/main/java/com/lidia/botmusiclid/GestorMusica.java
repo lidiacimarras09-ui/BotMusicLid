@@ -5,43 +5,21 @@ import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.playback.MutableAudioFrame;
-import dev.lavalink.youtube.YoutubeAudioSourceManager;
-
-// Importamos solo los clientes que sabemos seguro que existen en tu versión
-import dev.lavalink.youtube.clients.MusicWithThumbnail;
-import dev.lavalink.youtube.clients.WebWithThumbnail;
-import dev.lavalink.youtube.clients.AndroidTestsuiteWithThumbnail;
+import com.sedmelluq.discord.lavaplayer.source.AudioSourceManagers;
 
 import net.dv8tion.jda.api.audio.AudioSendHandler;
 import java.nio.ByteBuffer;
 
 public class GestorMusica implements AudioSendHandler {
 
-    public static final AudioPlayerManager playerManager =
-            new DefaultAudioPlayerManager();
+    public static final AudioPlayerManager playerManager = new DefaultAudioPlayerManager();
 
     static {
-        String refreshToken = System.getenv("YOUTUBE_REFRESH_TOKEN");
-
-        // Configuramos el gestor SIN el cliente de TvHtml5Embedded
-        YoutubeAudioSourceManager youtube = new YoutubeAudioSourceManager(
-                true,
-                new MusicWithThumbnail(),
-                new WebWithThumbnail(),
-                new AndroidTestsuiteWithThumbnail()
-        );
-
-        if (refreshToken != null && !refreshToken.isEmpty()) {
-            youtube.useOauth2(refreshToken, true);
-            System.out.println("✅ OAuth con refresh token cargado");
-        } else {
-            youtube.useOauth2(null, false);
-            System.out.println("⚠️ No hay refresh token");
-        }
-
-        playerManager.registerSourceManager(youtube);
-        com.sedmelluq.discord.lavaplayer.source.AudioSourceManagers
-                .registerLocalSource(playerManager);
+        // Al usar un nodo externo de Lavalink, no necesitamos configurar el 
+        // YoutubeAudioSourceManager localmente. Registramos fuentes básicas locales:
+        AudioSourceManagers.registerLocalSource(playerManager);
+        // Si necesitas fuentes adicionales (como Bandcamp, Vimeo, etc), se añaden aquí:
+        AudioSourceManagers.registerRemoteSources(playerManager);
     }
 
     private final AudioPlayer player;
